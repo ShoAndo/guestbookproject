@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title> ゲストブック</title>
+    <link rel="stylesheet" href="{% static 'guestbook/css/style.css' %}" type="text/css">
+</head>
+<body>
+<h1> ゲストブック</h1>
+<form action="/" method="post">{% csrf_token %}
+    <p>書き込みをどうぞ。</p>
+    {{ form.as_p }}
+<input type="submit" value="送信">
+</form>
+
+<div class="entries-area">
+{% if greetings %}
+<h2>これまでの書き込み</h2>
+{% for greeting in greetings %}
+    <h3>{{ greeting.name }}さんの書き込み({{ greeting.created_at }})</h3>
+    {{ greeting.comment |linebreaks }}
+{% endfor %}
+{% endif %}
+
+</div>
+</body>
+</html>
